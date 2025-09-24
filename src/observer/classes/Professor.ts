@@ -3,8 +3,11 @@ import { ISubscriber } from "../interface/ISubscriber";
 import { IHomework } from "../interface/IHomework";
 
 export class Professor implements IPublisher {
-  private alumnos: ISubscriber[] = [];
-  private trabajosPracticos: IHomework[] = [];
+  constructor(
+    private name: string,
+    private alumnos: ISubscriber[] = [],
+    private trabajosPracticos: IHomework[] = []
+  ) {}
 
   subscribe(alumno: ISubscriber): void {
     this.alumnos.push(alumno);
@@ -17,7 +20,7 @@ export class Professor implements IPublisher {
   publish(trabajoPractico: IHomework): void {
     this.trabajosPracticos.push(trabajoPractico);
     console.log(
-      `[${trabajoPractico.professorName}] Publicó: ${trabajoPractico.title} - entrega ${trabajoPractico.dueDate}.`
+      `[${this.name}] Publicó: ${trabajoPractico.title} - entrega ${trabajoPractico.dueDate}.`
     );
     this.notificationStudents(trabajoPractico);
   }
